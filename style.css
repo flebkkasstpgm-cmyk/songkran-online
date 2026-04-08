@@ -1,0 +1,82 @@
+:root {
+    --sky-top: #00b4d8;
+    --sky-bottom: #90e0ef;
+    --text-red: #d00000;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Sarabun', sans-serif; background-color: #ade8f4; overflow: hidden; height: 100vh; }
+
+/* --- พื้นหลังท้องฟ้าสดใส (ไม่มีวัด) --- */
+.sky-container {
+    position: absolute; width: 100%; height: 100%; z-index: 1;
+    background: linear-gradient(to bottom, var(--sky-top) 0%, var(--sky-bottom) 60%, #ffffff 100%);
+}
+
+/* พระอาทิตย์ดวงโต */
+.sun {
+    position: absolute; top: 50px; left: 80px; width: 140px; height: 140px;
+    background: radial-gradient(circle, #fff700 20%, #ffb703 60%, #fb8500 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 80px rgba(251, 133, 0, 0.6);
+    z-index: 2;
+}
+
+/* ก้อนเมฆเสมือนจริง (Soft Layered Clouds) */
+.cloud-group {
+    position: absolute; width: 400px; height: 150px;
+    animation: float-clouds linear infinite;
+    z-index: 3;
+    filter: blur(40px);
+}
+.cloud-puff {
+    position: absolute; background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+}
+@keyframes float-clouds { from { left: -500px; } to { left: 110vw; } }
+
+/* --- UI --- */
+.ui-layer { position: relative; z-index: 50; text-align: center; padding-top: 80px; pointer-events: none; }
+h1 { font-size: 3.8rem; color: #fb8500; text-shadow: 2px 2px 0 white, 0 5px 15px rgba(0,0,0,0.1); }
+.btn-primary { background: linear-gradient(135deg, #fb8500 0%, #ffb703 100%); border: none; padding: 20px 55px; font-size: 1.8rem; color: white; border-radius: 60px; cursor: pointer; font-weight: bold; box-shadow: 0 12px 30px rgba(251, 133, 0, 0.4); transition: 0.3s; pointer-events: auto; }
+.btn-primary:hover { transform: scale(1.1) translateY(-5px); }
+
+/* --- Stage --- */
+.main-stage { position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; z-index: 10; }
+
+/* --- ขันเดิมใส่ลาย --- */
+.item-object { position: absolute; width: 200px; height: 150px; z-index: 20; display: flex; flex-direction: column; align-items: center; will-change: transform, left; }
+.b-info { position: absolute; top: -100px; background: white; padding: 14px 25px; border-radius: 35px; font-size: 1.3rem; font-weight: 800; color: var(--text-red); white-space: nowrap; box-shadow: 0 12px 30px rgba(0,0,0,0.2); border: 4px solid #fb8500; z-index: 30; }
+.b-info::after { content: ''; position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 15px solid #fb8500; }
+
+.bowl-classic { width: 110px; height: 75px; border-radius: 10px 10px 50px 50px; position: relative; box-shadow: 0 15px 25px rgba(0,0,0,0.3); border-top: 6px solid rgba(255,255,255,0.7); overflow: hidden; }
+.thai-pattern { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.25; background-image: repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 1px, transparent 10px), repeating-linear-gradient(-45deg, #000 0, #000 1px, transparent 1px, transparent 10px), radial-gradient(circle, #000 1px, transparent 1px); background-size: 10px 10px, 10px 10px, 15px 15px; }
+.silver .bowl-classic { background: radial-gradient(circle at 30% 30%, #ffffff, #adb5bd); }
+.gold .bowl-classic { background: radial-gradient(circle at 30% 30%, #fff700, #fb8500); }
+
+/* ปืนฉีดน้ำรุ่นเดิม */
+.gun-classic { position: relative; width: 120px; height: 50px; margin-top: 20px; }
+.gun-body { width: 100%; height: 100%; border-radius: 10px 30px 10px 10px; background: #ef233c; border-bottom: 8px solid #8d0801; }
+.gun-tank { position: absolute; top: -20px; left: 15px; width: 80px; height: 35px; background: #ffb703; border-radius: 20px; }
+
+/* --- ละอองน้ำ --- */
+.water-stream { position: absolute; width: 14px; height: 14px; background: rgba(173, 232, 244, 0.8); border-radius: 50%; pointer-events: none; z-index: 15; }
+@keyframes water-flow { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; } }
+
+/* --- Modal --- */
+.modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); }
+.modal-content { background: #fffcf2; margin: 5% auto; padding: 45px; width: 90%; max-width: 550px; border-radius: 40px; border: 8px solid #fb8500; }
+.close-btn { position: absolute; right: 30px; top: 20px; font-size: 3rem; cursor: pointer; color: #c1121f; }
+.form-group { margin-bottom: 25px; }
+label { display: block; margin-bottom: 12px; font-weight: 900; font-size: 1.2rem; }
+input, textarea { width: 100%; padding: 18px; border: 3px solid #669bbc; border-radius: 20px; font-size: 1.1rem; }
+
+.item-options { display: flex; flex-wrap: wrap; gap: 10px; }
+.i-preview { flex: 1; min-width: 110px; padding: 18px 10px; text-align: center; background: #fff; border-radius: 20px; cursor: pointer; border: 3px solid transparent; font-weight: bold; }
+.option input { display: none; }
+.option input:checked + .i-preview { background: #fb8500; color: white; border-color: #003049; }
+
+.btn-submit { width: 100%; background: #c1121f; color: white; border: none; padding: 22px; font-size: 1.6rem; font-weight: 900; border-radius: 20px; cursor: pointer; margin-top: 15px; }
+
+.splash { position: absolute; width: 100px; height: 100px; background: rgba(0, 180, 216, 0.4); border-radius: 50%; pointer-events: none; animation: splash-grow 0.8s forwards; }
+@keyframes splash-grow { from { transform: scale(0.3); opacity: 1; } to { transform: scale(8); opacity: 0; } }
